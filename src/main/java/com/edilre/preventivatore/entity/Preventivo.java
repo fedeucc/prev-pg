@@ -33,6 +33,14 @@ public class Preventivo {
 	private String cognome;
 
 	@Field
+	@TextIndexed
+	private String email;
+
+	@Field
+	@TextIndexed
+	private String telefono;
+
+	@Field
 	private String indirizzo;
 
 	@Field
@@ -109,12 +117,30 @@ public class Preventivo {
 		this.data = data;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
 	public static Preventivo fromModel(PreventivoModel model) {
 		Preventivo prev = new Preventivo();
 		prev.setId(model.getId());
 		prev.setIndirizzo(model.getDatiCliente().getIndirizzo());
 		prev.setData(model.getDatiPreventivo().getData());
 		prev.setCognome(model.getDatiCliente().getCognome());
+		prev.setEmail(model.getDatiCliente().getEmail());
+		prev.setTelefono(model.getDatiCliente().getTelefono());
 		prev.setNome(model.getDatiCliente().getNome());
 		prev.setOggetto(model.getDatiPreventivo().getOggetto());
 		prev.setProdotti(model.getDatiPreventivo().getProdotti().stream().map(ProdottoPreventivo::fromModel).collect(Collectors.toList()));
