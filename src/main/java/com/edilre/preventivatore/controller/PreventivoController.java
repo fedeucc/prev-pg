@@ -87,13 +87,13 @@ public class PreventivoController {
 	}
 	
 	@GetMapping(value = "/{id}/mail")
-	public ResponseEntity<Void> inviaMail(@PathVariable("id") Integer id, @RequestParam(value = "mail") String mail) throws DocumentException, IOException, MessagingException {
+	public ResponseEntity<Void> inviaMail(@PathVariable("id") Integer id) throws DocumentException, IOException, MessagingException {
 		
 		PreventivoModel model = this.service.getById(id);
 		
 		ByteArrayOutputStream pdf = this.stampaService.generatePdfFromHtml(model);
 		
-		this.mailService.sendMessageWithAttachment(mail, "Preventivo Costruzioni P&G", "Buongiorno,\ncome concordato, in allegato il preventivo da Lei richiesto.\n\nLa ringraziamo e Le auguriamo una buona giornata.", pdf.toByteArray());
+		this.mailService.sendMessageWithAttachment(model.getDatiCliente().getEmail(), "Preventivo Costruzioni P&G", "Buongiorno,\ncome concordato, in allegato il preventivo da Lei richiesto.\n\nLa ringraziamo e Le auguriamo una buona giornata.", pdf.toByteArray());
 		
 	    return ResponseEntity.ok().build();
 	}
